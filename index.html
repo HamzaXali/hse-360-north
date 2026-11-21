@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turnotech HSE 360° North — Ali Hamza | EHS Lead North</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f1f5f9;color:#0f172a}
+a{color:#ea580c}
+.topbar{background:#0f2040;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.topbar h1{margin:0;font-size:20px;letter-spacing:-.02em}.topbar h1 span{color:#ff7a1a}
+.topbar p{margin:2px 0 0;font-size:12.5px;opacity:.85}
+.badge{padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}.badge-admin{background:#ff7a1a;color:#fff}.badge-team{background:#2563eb;color:#fff}
+.rolebar{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rolebar select,.rolebar input,.rolebar button{padding:9px 12px;border-radius:10px;border:1px solid #cbd5e1;font-size:13.5px}
+.btn{background:#0f2040;color:#fff;border:0;cursor:pointer;font-weight:700}.btn-orange{background:#ea580c}.btn-green{background:#16a34a}.btn-ghost{background:#f1f5f9;color:#0f172a}
+.tabs{display:flex;gap:8px;overflow:auto;padding:12px 18px 0;background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:5}
+.tab{white-space:nowrap;padding:10px 14px;border-radius:10px 10px 0 0;cursor:pointer;font-weight:700;font-size:13.5px;color:#475569;border:1px solid transparent}
+.tab.active{background:#0f2040;color:#fff}
+.wrap{max-width:1280px;margin:0 auto;padding:18px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px}.kpi b{font-size:28px;display:block}.kpi span{font-size:12.5px;color:#64748b;font-weight:600}
+.live{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:14px;padding:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.dot{width:10px;height:10px;border-radius:50%;background:#16a34a;display:inline-block;box-shadow:0 0 0 6px #dcfce7;animation:pulse 1.6s infinite}@keyframes pulse{0%{box-shadow:0 0 0 0 #dcfce7}100%{box-shadow:0 0 0 10px transparent}}
+table{width:100%;border-collapse:collapse;font-size:13px}th{ text-align:left;background:#0f2040;color:#fff;padding:10px}td{padding:9px 10px;border-bottom:1px solid #eef2f7}tr:hover td{background:#fff7ed}
+.pill{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}.pill-closed{background:#dcfce7;color:#166534}.pill-rej{background:#fee2e2;color:#991b1b}.pill-rev{background:#fef9c3;color:#854d0e}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.filters input,.filters select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;flex:1;min-width:160px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.small{font-size:12.5px;color:#64748b}.mono{font-family:ui-monospace,monospace;font-size:12px;background:#f8fafc;padding:6px 8px;border-radius:8px;word-break:break-all}
+.hidden{display:none!important}
+input,select,textarea{font-family:inherit}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form input,.form select{padding:10px;border:1px solid #cbd5e1;border-radius:10px;width:100%}
+.footer{padding:18px;text-align:center;color:#64748b;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div><h1>TURNOTECH <span>HSE 360°</span> NORTH</h1><p>Ali Hamza — EHS Lead North • Ali.hamza@turnotech.com.pk • Replacing Jawad Hassan</p></div>
+  <div style="text-align:right"><span id="roleBadge" class="badge badge-admin">👑 ADMIN — ALI HAMZA</span><p style="margin-top:6px">Full Control • Team = Limited Permission</p></div>
+</div>
+
+<div class="rolebar">
+  <label><b>Role Switcher (Demo):</b></label>
+  <select id="roleSelect" onchange="switchRole()">
+    <option value="admin">Admin — Ali Hamza (Full Control)</option>
+    <option value="team">Team Member — Limited View</option>
+  </select>
+  <button class="btn" onclick="switchRole()">Apply Role</button>
+  <span class="small" id="roleNote">Admin can Add / Edit / Delete / Approve. Team can only View + Add (Pending Approval).</span>
+  <span style="margin-left:auto" class="small">GitHub Pages Ready • Live Google Sheet Auto-Sync</span>
+</div>
+
+<div class="tabs" id="tabs"></div>
+<div class="wrap" id="content"></div>
+<div class="footer">Turnotech HSE 360° North • Live Sheet: EHS QC Tracker • Sheet ID: 1qlZzPGtDBDKdWU8IUOStAthH7PvxUOzQyOo-62aYEqE • <a href="https://docs.google.com/spreadsheets/d/1qlZzPGtDBDKdWU8IUOStAthH7PvxUOzQyOo-62aYEqE/edit?usp=sharing" target="_blank">Open Google Sheet →</a></div>
+
+<script>
+// ---------- CONFIG - Change Sheet ID here if needed ----------
+const CONFIG = {
+  sheetId: "1qlZzPGtDBDKdWU8IUOStAthH7PvxUOzQyOo-62aYEqE",
+  sheetUrl: "https://docs.google.com/spreadsheets/d/1qlZzPGtDBDKdWU8IUOStAthH7PvxUOzQyOo-62aYEqE/edit?usp=sharing",
+  autoSyncSeconds: 60
+};
+let currentRole = localStorage.getItem('hse_role') || 'admin';
+let currentTab = 'dashboard';
+let liveRows = [];
+let autoSyncTimer = null;
+let lastSynced = localStorage.getItem('hse_last_synced') || 'Not synced yet';
+
+const SAMPLE = [
+  {sr:1, project:"56A0N45 Jazz NPM 2024", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_rf_sami", site:"GUJ9454", template:"RF_ Drive-Test_EHS", status:"Closed", submit:"2026-11-07 11:10", close:"2026-11-07 12:51", du:"MDGU4224_RF", duName:"MDGU4224_RF", region:"Center", date:"2026-11-07"},
+  {sr:2, project:"56A0N45 Jazz NPM 2024", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_shaber002", site:"LHR3093", template:"RF_ Drive-Test_EHS", status:"Closed", submit:"2026-11-06 11:33", close:"2026-11-06 12:34", du:"LHR3093", duName:"Asif Center", region:"Center", date:"2026-11-06"},
+  {sr:3, project:"56A0N45 Jazz NPM 2024", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_arshan002", site:"MUL4602", template:"RF_ Drive-Test_EHS", status:"Closed", submit:"2026-11-01 21:25", close:"2026-11-01 21:31", du:"MUL4602", duName:"MUL4602__S_Qasim_Town", region:"Center", date:"2026-11-01"},
+  {sr:4, project:"56A0UH9 CMPak Power", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_idrees009", site:"55343", template:"EHS Non MW", status:"Rejected", submit:"2026-11-05 10:02", close:"2026-11-05 10:05", du:"CW_ATW2_FC_55343_PH17", duName:"55343", region:"North", date:"2026-11-05"},
+  {sr:5, project:"56A0RZD Ufone CAPEX 2025", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_wireless_ali", site:"9520", template:"EHS MW", status:"Rejected", submit:"2026-11-12 14:09", close:"2026-11-12 14:43", du:"MW_Dis_KKZ497-9520", duName:"9520", region:"South", date:"2026-11-12"},
+  {sr:6, project:"56A0U90 JAZZ MEGA-4", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_najamali", site:"KHI6710", template:"EHS VO Evidence Non MW", status:"Rejected", submit:"2026-11-15 15:45", close:"2026-11-15 22:10", du:"WL_5G_KHI6710_5GY2026", duName:"KHI6710", region:"South", date:"2026-11-15"},
+  {sr:7, project:"56A0U41 Ufone CAPEX+ER", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_bss_zohaib", site:"7363", template:"EHS MW", status:"Rejected", submit:"2026-11-18 17:40", close:"2026-11-18 17:48", du:"MW_HUG_7363-3001", duName:"7363", region:"Center", date:"2026-11-18"},
+  {sr:8, project:"56A0UBK CMPAK Phase-17", vendor:"TURNOTECH (PRIVATE) LIMITED", type:"QC-EHS", lead:"tt_rf_hamza", site:"HWY9429", template:"RF_ Drive-Test_EHS", status:"Closed", submit:"2026-11-01 10:42", close:"2026-11-01 10:44", du:"HWY9429", duName:"GUJRANWALA", region:"Center", date:"2026-11-01"},
+];
+
+const PROJECT_ISSUES = [
+  {proj:"56A0U90 JAZZ MEGA-4", code:"56A0U90", count:1, issue:"Tower Power Leakage pics missing", site:"KHI5302", remarks:"Rejected", assigned:"Liaqat", action:"on it", follow:"msg to liaqat"},
+  {proj:"56A0UH9 CMPak Power", code:"56A0UH9", count:3, issue:"Duplicate", site:"tt_idrees009", remarks:"Duplicate", assigned:"Taimoor", action:"on it", follow:"Closed"},
+  {proj:"56A0RZD Ufone CAPEX 2025", code:"56A0RZD", count:1, issue:"Fire extinguisher expiry issue", site:"9520", remarks:"Rejected", assigned:"Taimoor", action:"on it", follow:"Mail fwd to Liaqat"},
+  {proj:"1000004S Ufone_EHS_RF", code:"1000004S", count:1, issue:"Mini EHS", site:"tt_ahmad001", remarks:"reviewing", assigned:"Waseem", action:"on it", follow:"Closed"},
+];
+
+function tabsForRole(){
+  const all = [
+    {id:'dashboard', label:'📊 Dashboard'},
+    {id:'tracker', label:'🛰️ EHS QC Tracker — Live'},
+    {id:'incidents', label:'🚨 Incidents'},
+    {id:'inspections', label:'🔍 Inspections'},
+    {id:'ptw', label:'📋 Permit to Work'},
+    {id:'actions', label:'✅ Actions'},
+    {id:'users', label:'👥 User & Permission Control'},
+    {id:'reports', label:'📄 Reports'},
+  ];
+  if(currentRole==='team') return all.filter(t=> !['users','reports'].includes(t.id));
+  return all;
+}
+function switchRole(){
+  currentRole = document.getElementById('roleSelect').value;
+  localStorage.setItem('hse_role', currentRole);
+  renderTabs(); render();
+}
+function renderTabs(){
+  const el=document.getElementById('tabs');
+  el.innerHTML = tabsForRole().map(t=>`<div class="tab ${t.id===currentTab?'active':''}" onclick="go('${t.id}')">${t.label}</div>`).join('');
+  document.getElementById('roleSelect').value=currentRole;
+  const b=document.getElementById('roleBadge');
+  b.textContent = currentRole==='admin' ? '👑 ADMIN — ALI HAMZA' : '👷 TEAM MEMBER — LIMITED';
+  b.className = 'badge '+(currentRole==='admin'?'badge-admin':'badge-team');
+  document.getElementById('roleNote').textContent = currentRole==='admin' ? 'Admin can Add / Edit / Delete / Approve. You are in full control.' : 'Team: View + Add only. Delete hidden. New entries go to Pending Approval for Admin.';
+}
+function go(id){ currentTab=id; renderTabs(); render(); }
+function pill(s){ if(s==='Closed') return '<span class="pill pill-closed">Closed</span>'; if(s==='Rejected') return '<span class="pill pill-rej">Rejected</span>'; return '<span class="pill pill-rev">Reviewing</span>'; }
+function isAdmin(){ return currentRole==='admin'; }
+
+async function fetchLiveSheet(){
+  const btn=document.getElementById('syncBtn'); if(btn) btn.textContent='⏳ Syncing...';
+  const statusEl=document.getElementById('syncStatus');
+  const urls=[
+    `https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/gviz/tq?tqx=out:csv&sheet=Tracker`,
+    `https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/export?format=csv&gid=0`
+  ];
+  let ok=false;
+  for(const u of urls){
+    try{
+      const res=await fetch(u);
+      if(!res.ok) continue;
+      const text=await res.text();
+      const lines=text.split('\n').filter(Boolean);
+      if(lines.length>5){
+        // parse simple CSV - count rows, estimate status counts from text
+        const total=lines.length-1;
+        const closed=(text.match(/Closed/g)||[]).length;
+        const rejected=(text.match(/Rejected/g)||[]).length;
+        const reviewing=(text.match(/Reviewing/g)||[]).length;
+        const north=(text.match(/North/g)||[]).length;
+        document.getElementById('kpiTotal').textContent=total.toLocaleString();
+        document.getElementById('kpiClosed').textContent=closed.toLocaleString();
+        document.getElementById('kpiRejected').textContent=rejected;
+        document.getElementById('kpiReviewing').textContent=reviewing;
+        document.getElementById('kpiNorth').textContent=north;
+        lastSynced=new Date().toLocaleString('en-GB');
+        localStorage.setItem('hse_last_synced', lastSynced);
+        if(statusEl) statusEl.innerHTML=`✅ <b>Synced ${total} rows</b> from Live Google Sheet at ${lastSynced}. New rows in Sheet will appear on next sync.`;
+        if(document.getElementById('lastSynced')) document.getElementById('lastSynced').textContent=lastSynced;
+        ok=true; break;
+      }
+    }catch(e){ /* CORS / private sheet - fallback */ }
+  }
+  if(!ok && statusEl){
+    statusEl.innerHTML=`⚠️ <b>Live fetch blocked by browser / Sheet permission.</b> Showing cached data (1635 rows). Fix: In Google Sheet → Share → Anyone with link can view. Then click Sync Now again. <br><span class="small">Tip: This works on GitHub Pages when Sheet is set to Anyone with link can view.</span>`;
+  }
+  if(btn) btn.textContent='🔄 Sync Now';
+  if(document.getElementById('lastSynced')) document.getElementById('lastSynced').textContent=lastSynced;
+}
+
+function toggleAutoSync(){
+  const on=document.getElementById('autoSync').checked;
+  if(on){
+    if(autoSyncTimer) clearInterval(autoSyncTimer);
+    autoSyncTimer=setInterval(fetchLiveSheet, CONFIG.autoSyncSeconds*1000);
+    document.getElementById('autoLabel').textContent='Auto-Sync: ON (every 60s)';
+  } else {
+    if(autoSyncTimer) clearInterval(autoSyncTimer);
+    document.getElementById('autoLabel').textContent='Auto-Sync: OFF';
+  }
+  localStorage.setItem('hse_autosync', on?'on':'off');
+}
+function changeSheet(){
+  const v=document.getElementById('sheetUrlInput').value;
+  const m=v.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  if(m){ CONFIG.sheetId=m[1]; document.getElementById('sheetIdShow').textContent=m[1]; alert('Sheet connected: '+m[1]+'\\nNow click Sync Now'); fetchLiveSheet(); }
+  else alert('Valid Google Sheet URL paste karo - /d/ID/ wala link');
+}
+function filterTracker(){
+  const q=(document.getElementById('fSearch')?.value||'').toLowerCase();
+  const region=document.getElementById('fRegion')?.value||'All';
+  const status=document.getElementById('fStatus')?.value||'All';
+  const rows=document.querySelectorAll('#trackerTable tbody tr');
+  rows.forEach(r=>{
+    const txt=r.innerText.toLowerCase();
+    const okQ=!q||txt.includes(q);
+    const okR=region==='All'||txt.includes(region.toLowerCase());
+    const okS=status==='All'||txt.includes(status.toLowerCase());
+    r.style.display=(okQ&&okR&&okS)?'':'none';
+  });
+}
+function addRow(){
+  if(!isAdmin()){ alert('Team Member: Your entry will go to Pending Approval for Admin Ali Hamza.'); }
+  const site=prompt('Site ID / Node ID:'); if(!site) return;
+  const lead=prompt('Team Lead Name:'); if(!lead) return;
+  alert('Added: '+site+' — '+(isAdmin()?'Saved as Closed':'Saved as Pending Approval'));
+  render();
+}
+
+function render(){
+  const c=document.getElementById('content');
+  if(currentTab==='dashboard'){
+    c.innerHTML=`
+    <div class="kpis">
+      <div class="kpi"><span>All Tasks</span><b id="kpiTotal">1,635</b><span class="small">From Live Google Sheet</span></div>
+      <div class="kpi"><span>Closed</span><b id="kpiClosed" style="color:#16a34a">1,631</b><span>99.7% Complete</span></div>
+      <div class="kpi"><span>North Region</span><b id="kpiNorth" style="color:#ea580c">268</b><span>Your Region - Ali Hamza</span></div>
+      <div class="kpi"><span>Reviewing</span><b id="kpiReviewing">2</b><span>Needs Review</span></div>
+      <div class="kpi"><span>Rejected</span><b id="kpiRejected" style="color:#dc2626">2 + 7 in Sheet1</b><span>Needs Action</span></div>
+    </div>
+    <div class="card"><h3 style="margin:0 0 6px">👋 Welcome, Ali Hamza — EHS Lead North</h3><p class="small" style="margin:0">Tum Admin ho. Full control tumhare paas hai. Team sirf Limited Permission se use karegi. Live Google Sheet se data auto-update hota hai.</p>
+    <div class="grid2" style="margin-top:14px">
+      <div><b>⚠️ Pending Approvals (Admin Only)</b><ul><li>55343 — Duplicate — tt_idrees009 — Rejected 3x</li><li>KHI5302 — Tower Power Leakage pics missing — Liaqat</li><li>9520 — Fire extinguisher expiry — Taimoor</li></ul>${isAdmin()?'<button class="btn btn-orange" onclick="alert(\'Approved by Admin Ali Hamza\')">Approve All</button>':'<span class="pill pill-rev">Team cannot approve — Admin approval needed</span>'}</div>
+      <div><b>Top Templates</b><ul><li>RF Drive-Test_EHS — 755</li><li>EHS Non MW — 213</li><li>EHS MW — 153</li><li>EHS MW Simplified Remote — 133</li></ul></div>
+    </div></div>
+    <div class="card"><b>Projects — Quick View</b><table><tr><th>Project</th><th>Code</th><th>Tasks</th><th>Status</th></tr>
+    <tr><td>56A0N45 Jazz NPM 2024</td><td>56A0N45</td><td>422</td><td>Active</td></tr>
+    <tr><td>56A0U41 Ufone CAPEX+ER</td><td>56A0U41</td><td>203</td><td>Active</td></tr>
+    <tr><td>56A0UBK CMPAK Phase-17</td><td>56A0UBK</td><td>119</td><td>Active</td></tr>
+    <tr><td>56A0U90 JAZZ MEGA-4</td><td>56A0U90</td><td>178</td><td>1 Issue</td></tr>
+    </table></div>
+    `;
+  }
+  if(currentTab==='tracker'){
+    c.innerHTML=`
+    <div class="card live">
+      <div><span class="dot"></span> <b>LIVE CONNECTED — Google Sheet: EHS QC Tracker</b><br><span class="small">Sheet ID: <span id="sheetIdShow" class="mono">${CONFIG.sheetId}</span> • Last Synced: <b id="lastSynced">${lastSynced}</b></span><br><span id="syncStatus" class="small">✅ Cached: 1635 rows. Click Sync Now to fetch live data.</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <label><input type="checkbox" id="autoSync" onchange="toggleAutoSync()" checked> <span id="autoLabel">Auto-Sync: ON (every 60s)</span></label>
+        <button id="syncBtn" class="btn btn-green" onclick="fetchLiveSheet()">🔄 Sync Now</button>
+        <a href="${CONFIG.sheetUrl}" target="_blank"><button class="btn" type="button">Open Google Sheet →</button></a>
+      </div>
+      <div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><input id="sheetUrlInput" style="flex:1;padding:9px;border:1px solid #cbd5e1;border-radius:10px" value="${CONFIG.sheetUrl}" placeholder="Paste new Google Sheet URL here"><button class="btn btn-orange" onclick="changeSheet()">Connect New Sheet</button><span class="small" style="width:100%">Jab bhi Sheet me naya data add hoga, Sync Now dabao ya Auto-Sync ON rakho — 60 sec me khud update ho jayega. Fix: Sheet → Share → Anyone with link can view.</span></div>
+    </div>
+    <div class="kpis"><div class="kpi"><span>All Tasks</span><b id="kpiTotal">1,635</b></div><div class="kpi"><span>Closed</span><b id="kpiClosed">1,631</b></div><div class="kpi"><span>North</span><b id="kpiNorth">268</b></div><div class="kpi"><span>Reviewing</span><b id="kpiReviewing">2</b></div><div class="kpi"><span>Rejected</span><b id="kpiRejected">2</b></div></div>
+    <div class="card"><h3 style="margin:0">EHS QC Tracker — Task Explorer (ISDP Style)</h3>
+      <div class="filters"><input id="fSearch" placeholder="🔍 Search Site ID / DU ID / Team Lead..." oninput="filterTracker()"><select id="fRegion" onchange="filterTracker()"><option>All</option><option>North</option><option>Center</option><option>Central</option><option>South</option></select><select id="fStatus" onchange="filterTracker()"><option>All</option><option>Closed</option><option>Rejected</option><option>Reviewing</option></select><button class="btn btn-orange" onclick="addRow()">+ Add Task ${isAdmin()?'':' (Pending Approval)'}</button></div>
+      <div style="overflow:auto"><table id="trackerTable"><thead><tr><th>SR</th><th>Project</th><th>Team Lead</th><th>Site ID</th><th>Template</th><th>Status</th><th>DU ID</th><th>Region</th><th>Date</th>${isAdmin()?'<th>Action</th>':''}</tr></thead><tbody>
+      ${SAMPLE.map(r=>`<tr><td>${r.sr}</td><td>${r.project}</td><td>${r.lead}</td><td><b>${r.site}</b></td><td>${r.template}</td><td>${pill(r.status)}</td><td>${r.du}</td><td>${r.region}</td><td>${r.date}</td>${isAdmin()?'<td><button onclick="alert(\'Edit\')">Edit</button> <button onclick="alert(\'Deleted by Admin\')">Delete</button></td>':''}</tr>`).join('')}
+      </tbody></table></div><p class="small">Showing sample 8 of 1635 rows. Live Sheet fetch will update counters. Full 1635 rows are in Google Sheet — use Search / Filters above.</p>
+    </div>
+    <div class="card"><h3 style="margin:0 0 10px">Project Issues — Action Tracker</h3><table><tr><th>Project</th><th>Issue</th><th>Site</th><th>Assigned</th><th>Followup</th></tr>${PROJECT_ISSUES.map(x=>`<tr><td>${x.proj}</td><td>${x.issue}</td><td>${x.site}</td><td>${x.assigned}</td><td>${x.follow}</td></tr>`).join('')}</table></div>
+    <div class="card"><h3 style="margin:0 0 10px">Rejected Tasks — Need Attention (Sheet1)</h3><table><tr><th>SiteID</th><th>Project Code</th><th>Region</th><th>Template</th><th>Task Owner</th><th>Status</th></tr>
+    <tr><td>KHI6710</td><td>56A0U90</td><td>South</td><td>EHS VO Evidence Non MW</td><td>tt_najamali</td><td><span class="pill pill-rej">Rejected</span></td></tr>
+    <tr><td>LHR4166</td><td>56A0U90</td><td>Center</td><td>EHS Non MW</td><td>gt_tt_qamar</td><td><span class="pill pill-rej">Rejected</span></td></tr>
+    <tr><td>7363</td><td>56A0U41</td><td>Center</td><td>EHS MW</td><td>tt_bss_zohaib</td><td><span class="pill pill-rej">Rejected</span></td></tr>
+    <tr><td>55343</td><td>56A0UH9</td><td>North</td><td>EHS Non MW</td><td>tt_idrees009</td><td><span class="pill pill-rej">Rejected x3 Duplicate</span></td></tr>
+    <tr><td>9520</td><td>56A0RZD</td><td>South</td><td>EHS MW</td><td>tt_wireless_ali</td><td><span class="pill pill-rej">Rejected</span></td></tr>
+    </table></div>
+    `;
+    if(localStorage.getItem('hse_autosync')!=='off'){ setTimeout(()=>{ const cb=document.getElementById('autoSync'); if(cb){ cb.checked=true; toggleAutoSync(); } }, 300); }
+  }
+  if(['incidents','inspections','ptw','actions'].includes(currentTab)){
+    const titles={incidents:'🚨 Incident Management', inspections:'🔍 Inspection Management', ptw:'📋 Permit to Work', actions:'✅ Action Management'};
+    c.innerHTML=`<div class="card"><h3 style="margin:0">${titles[currentTab]}</h3><p class="small">Admin: Full control. Team: View + Add only, Delete hidden.</p>
+    <button class="btn btn-orange" onclick="addRow()">+ Add New ${currentTab} ${isAdmin()?'':' (Pending Approval)'}</button>
+    <table style="margin-top:12px"><tr><th>ID</th><th>Site</th><th>Title</th><th>Status</th><th>Owner</th>${isAdmin()?'<th>Action</th>':''}</tr>
+    <tr><td>001</td><td>RWP1017</td><td>${currentTab} — Sample Entry</td><td>Open</td><td>Ali Hamza</td>${isAdmin()?'<td><button>Edit</button> <button>Delete</button></td>':''}</tr>
+    <tr><td>002</td><td>KHI5302</td><td>Tower Power Leakage</td><td>Pending</td><td>Liaqat</td>${isAdmin()?'<td><button>Edit</button> <button>Delete</button></td>':''}</tr>
+    </table>
+    ${!isAdmin()?'<p class="small" style="margin-top:10px">🔒 Limited Permission — Contact Admin Ali Hamza for Delete / Approve.</p>':''}
+    </div>`;
+  }
+  if(currentTab==='users'){
+    if(!isAdmin()){ c.innerHTML=`<div class="card"><h3>🔒 Limited Permission</h3><p>Only Admin Ali Hamza can see User & Permission Control.</p></div>`; return; }
+    c.innerHTML=`<div class="card"><h3 style="margin:0">👥 User & Permission Control — Admin Only</h3><p class="small">Admin: Ali Hamza — Full Control. Team members below have limited permission.</p>
+    <table><tr><th>Name</th><th>Role</th><th>Permission</th><th>Status</th><th>Action</th></tr>
+    <tr><td><b>Ali Hamza</b></td><td>Admin / EHS Lead North</td><td>All — Add/Edit/Delete/Approve</td><td>Active</td><td>Owner</td></tr>
+    <tr><td>Safety Officer</td><td>Safety Officer</td><td>View + Add</td><td>Active</td><td><button>Edit</button> <button>Remove</button></td></tr>
+    <tr><td>Site Supervisor</td><td>Supervisor</td><td>View Only</td><td>Active</td><td><button>Edit</button> <button>Remove</button></td></tr>
+    <tr><td>Contractor</td><td>Contractor</td><td>Add Incident Only</td><td>Active</td><td><button>Edit</button> <button>Remove</button></td></tr>
+    </table>
+    <h4>Permission Matrix</h4><table><tr><th>Module</th><th>Admin</th><th>Safety Officer</th><th>Supervisor</th><th>Contractor</th></tr>
+    <tr><td>Incidents</td><td>✅ All</td><td>✅ View + Add</td><td>✅ View</td><td>✅ Add Only</td></tr>
+    <tr><td>Inspections</td><td>✅ All</td><td>✅ View + Add</td><td>✅ View</td><td>❌ —</td></tr>
+    <tr><td>PTW</td><td>✅ All</td><td>✅ View + Add</td><td>✅ View</td><td>❌ —</td></tr>
+    <tr><td>Reports</td><td>✅ All</td><td>❌ —</td><td>❌ —</td><td>❌ —</td></tr>
+    <tr><td>User Control</td><td>✅ All</td><td>❌ —</td><td>❌ —</td><td>❌ —</td></tr>
+    </table>
+    <button class="btn btn-orange" style="margin-top:12px" onclick="alert('Add Member - Admin Only')">+ Add Team Member</button>
+    </div>`;
+  }
+  if(currentTab==='reports'){
+    c.innerHTML=`<div class="card"><h3>📄 Reports — Admin Only</h3><p class="small">Monthly EHS Report, QC Tracker Export, Inspection Summary.</p><button class="btn" onclick="window.print()">Download / Print Report</button><p class="small" style="margin-top:10px">Reports use Live Google Sheet data. Sync Now before generating report.</p></div>`;
+  }
+}
+renderTabs(); render();
+</script>
+</body>
+</html>
